@@ -41,6 +41,10 @@
 
 * { box-sizing: border-box; }
 
+/* Ensure the [hidden] attribute always wins over display:flex/grid
+   set on .cover and .brand-grid (used to toggle the two V2 modes). */
+[hidden] { display: none !important; }
+
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -246,6 +250,8 @@ button { font-family: inherit; cursor: pointer; }
 .shot-thumb {
   position: relative;
   display: block;
+  width: 100%;
+  padding: 0;
   border-radius: 16px;
   overflow: hidden;
   aspect-ratio: 4 / 3;
@@ -253,6 +259,7 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid var(--gray-200);
   box-shadow: 0 1px 3px #1018281a, 0 2px 1px #1018280f;
   transition: box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .shot-thumb:hover,
