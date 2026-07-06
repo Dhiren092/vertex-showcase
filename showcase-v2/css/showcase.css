@@ -1,0 +1,833 @@
+/* ============================================================
+   Vertex Experience — Showcase
+   Design language matched to vertexexperience.com:
+   - Headings: Albert Sans (self-hosted, same file as main site)
+   - Body: Inter
+   - Brand accent #38aba7, primary #101828, body text #475467
+   - Pill CTAs with the site's circular fill hover animation
+   ============================================================ */
+
+@font-face {
+  font-family: Albertsans;
+  src: url("../fonts/subset-AlbertSans-VariableFont_wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Brand (from the main site's CSS variables) */
+  --brand-accent: #38aba7;
+  --brand-accent-light: #38aba733;
+  --brand-accent-light-2: #d1f0ef;
+  --brand-primary: #101828;
+
+  /* Neutrals (main site gray scale) */
+  --gray-50: #f9fafb;
+  --gray-200: #eaecf0;
+  --gray-300: #d0d5dd;
+  --gray-500: #667085;
+  --gray-600: #475467;
+  --gray-700: #344054;
+
+  --text-body: var(--gray-600);
+  --text-heading: var(--brand-primary);
+  --success: #12b76a;
+
+  --headings: Albertsans, Georgia, sans-serif;
+  --body: Inter, Arial, sans-serif;
+  --ls-headings: -0.02em;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-body);
+  background: #f2f4f7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  font-family: var(--headings);
+  color: var(--text-heading);
+  letter-spacing: var(--ls-headings);
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; cursor: pointer; }
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- CTA button (main site .button_component clone) ---------- */
+
+.btn-cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--brand-accent);
+  color: var(--brand-primary);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+  border: 0;
+  border-radius: 100vh;
+  padding: 0.875rem 1.75rem;
+  transition: color 0.6s;
+  white-space: nowrap;
+}
+
+.btn-cta span { position: relative; z-index: 1; }
+
+/* The circular fill that grows from the bottom on hover */
+.btn-cta::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  aspect-ratio: 1;
+  width: 115%;
+  border-radius: 100vh;
+  background-color: var(--brand-primary);
+  pointer-events: none;
+  transform: translateX(-50%) scale(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.6s cubic-bezier(0.47, 0, 0.23, 1.38);
+}
+
+.btn-cta:hover { color: #fff; }
+
+.btn-cta:hover::before { transform: translateX(-50%) scale(1); }
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.searchbar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 620px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--gray-300);
+  border-radius: 100vh;
+  padding: 0 20px;
+  height: 48px;
+  color: var(--gray-500);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchbar:focus-within {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px var(--brand-accent-light);
+}
+
+.searchbar svg { width: 18px; height: 18px; flex: none; }
+
+.searchbar input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 16px; /* ≥16px prevents iOS Safari from zooming on focus */
+  color: var(--brand-primary);
+  outline: none;
+}
+
+.searchbar input::placeholder { color: var(--gray-500); }
+
+.topbar-actions { display: flex; align-items: center; gap: 20px; }
+
+.back-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-600);
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover { color: var(--brand-primary); }
+
+/* ---------- Filter chips ---------- */
+
+.filters {
+  display: flex;
+  gap: 10px;
+  padding: 18px 0 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: none;
+  background: #fff;
+  border: 1px solid var(--gray-300);
+  border-radius: 100vh;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.chip:hover {
+  background: var(--brand-accent-light-2);
+  border-color: var(--brand-accent);
+  color: var(--brand-primary);
+}
+
+.chip.is-active {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+
+/* ---------- Shot grid ---------- */
+
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px 32px;
+  padding: 28px 0 80px;
+}
+
+/* Hover matches the main site's card pattern:
+   image zooms to 1.125 over .4s, card lifts with a layered shadow (.2s). */
+.shot-thumb {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--gray-200);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 1px 3px #1018281a, 0 2px 1px #1018280f;
+  transition: box-shadow 0.2s;
+}
+
+.shot-thumb:hover,
+.shot-thumb:focus-visible {
+  box-shadow: 0 20px 24px -4px #0a0d1214, 0 8px 8px -4px #0a0d1208, 0 3px 3px -1.5px #0a0d120a;
+}
+
+.shot-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.shot-thumb:hover img,
+.shot-thumb:focus-visible img { transform: scale(1.05); }
+
+/* Card title below the thumbnail */
+.shot-card-titlelink { display: block; margin-top: 14px; }
+
+.shot-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+.shot-card-titlelink:hover .shot-card-title { color: var(--brand-accent); }
+
+/* ---------- Empty state ---------- */
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--gray-500);
+  padding: 80px 0;
+  font-size: 15px;
+}
+
+/* ---------- Shot detail page ---------- */
+
+.shot-page {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 24px 32px 80px;
+}
+
+.shot-title {
+  font-size: clamp(1.625rem, 1.1rem + 2.2vw, 2.375rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 24px 0 20px;
+}
+
+.shot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.shot-header-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.shot-header-info { min-width: 0; }
+
+.shot-header-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-primary);
+}
+
+.shot-header-name .for { color: var(--gray-500); font-weight: 400; }
+
+.shot-header-sub {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.available {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--success);
+}
+
+.available::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.shot-header-actions { display: flex; align-items: center; gap: 10px; }
+
+.avatar { border-radius: 50%; object-fit: cover; }
+.avatar-sm { width: 24px; height: 24px; }
+.avatar-md { width: 48px; height: 48px; }
+.avatar-lg { width: 72px; height: 72px; }
+
+/* Project sections — continuous scroll of all projects */
+
+.shot-section { margin-bottom: 96px; }
+
+.shot-section h2.shot-title {
+  font-size: clamp(1.25rem, 1rem + 1.3vw, 1.75rem);
+  margin-top: 0;
+}
+
+/* Media stack */
+
+.shot-media {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.shot-media img {
+  width: 100%;
+  border-radius: 16px;
+  background: var(--gray-200);
+  border: 1px solid var(--gray-200);
+}
+
+/* Footer author block */
+
+.author-block {
+  text-align: center;
+  margin: 72px 0 24px;
+}
+
+.author-block-divider {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.author-block-divider::before,
+.author-block-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--gray-200);
+}
+
+.author-block-name {
+  font-family: var(--headings);
+  color: var(--text-heading);
+  letter-spacing: var(--ls-headings);
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 16px 0 6px;
+}
+
+.author-block-tagline {
+  font-size: 15px;
+  color: var(--gray-600);
+  margin: 0 0 24px;
+}
+
+/* ---------- Cover stage (V2 first screen) ---------- */
+
+/* --stage-w sizes the cover so the whole first screen fits in the
+   viewport on desktop: never wider than the container, never taller
+   than the space left under the top bar + chips + caption. */
+.cover {
+  /* 1.725 = the 3:2 aspect (1.5) × 1.15 — cover shown 15% bigger. */
+  --stage-w: min(100%, calc((100vh - 300px) * 1.725));
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 0 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cover-stage,
+.cover-caption {
+  width: var(--stage-w);
+}
+
+.cover-stage {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  background: var(--gray-200);
+  cursor: pointer;
+  box-shadow: 0 1px 3px #1018281a, 0 2px 1px #1018280f;
+  transition: box-shadow 0.2s;
+}
+
+.cover-stage:hover,
+.cover-stage:focus-visible {
+  box-shadow: 0 20px 24px -4px #0a0d1214, 0 8px 8px -4px #0a0d1208, 0 3px 3px -1.5px #0a0d120a;
+}
+
+.cover-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.cover-stage:hover img,
+.cover-stage:focus-visible img { transform: scale(1.05); }
+
+/* "Browse projects" pill that appears over the cover on hover */
+.cover-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(16, 24, 40, 0.82);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 100vh;
+  padding: 12px 22px;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cover-stage:hover .cover-hint,
+.cover-stage:focus-visible .cover-hint {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.cover-caption {
+  margin: 16px 0 0;
+  padding: 0 4px;
+  font-size: 15px;
+  color: var(--gray-600);
+}
+
+/* Touch devices have no hover — keep the hint pill always visible. */
+@media (hover: none) {
+  .cover-hint {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .cover { padding: 20px 0 48px; }
+  .cover-stage { border-radius: 12px; }
+  .cover-hint {
+    bottom: 16px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+  .cover-caption { font-size: 13px; }
+}
+
+/* Short viewports (landscape phones, small laptop windows):
+   tighter chrome so the cover still gets useful height. */
+@media (max-height: 560px) {
+  .cover {
+    --stage-w: min(100%, calc((100vh - 180px) * 1.725));
+    padding: 12px 0 24px;
+  }
+  .topbar-inner { padding-top: 10px; padding-bottom: 10px; }
+  .filters { padding: 10px 0 4px; }
+  .cover-caption { margin-top: 10px; font-size: 13px; }
+}
+
+/* ---------- Lightbox (V2) ---------- */
+
+body.lightbox-open { overflow: hidden; }
+
+/* The topbar's backdrop blur can composite above fixed overlays in some
+   browsers; it's covered by the lightbox anyway, so switch it off. */
+body.lightbox-open .topbar {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  z-index: 0;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  background: rgba(16, 24, 40, 0.94);
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-width: 0;
+  height: 100%;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  border-radius: 34px;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.55);
+}
+
+.lightbox-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.lightbox-btn svg { width: 22px; height: 22px; }
+
+.lightbox-btn:hover {
+  background: #fff;
+  color: var(--brand-primary);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.lightbox-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(90vw, 720px);
+  color: #fff;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.lightbox-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.lightbox-count {
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .lightbox {
+    padding: 12px;
+    gap: 4px;
+    grid-template-columns: 1fr;
+  }
+  /* Arrows overlay the image on small screens to give it full width. */
+  .lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 42px;
+    height: 42px;
+    background: rgba(16, 24, 40, 0.55);
+  }
+  .lightbox-prev { left: 12px; }
+  .lightbox-next { right: 12px; }
+  .lightbox-img { max-height: calc(100vh - 120px); border-radius: 34px; }
+  .lightbox-caption { font-size: 13px; max-width: 86vw; }
+}
+
+/* Landscape phones: shrink chrome so the artwork gets the height. */
+@media (max-height: 560px) {
+  .lightbox { padding: 10px; }
+  .lightbox-img { max-height: calc(100vh - 76px); }
+  .lightbox-close { top: 10px; right: 10px; width: 40px; height: 40px; }
+  .lightbox-caption { bottom: 8px; font-size: 13px; }
+}
+
+/* ---------- Responsive ----------
+   Breakpoints:
+   ≤1100  tighter grid gaps (small laptop)
+   ≤1000  2-column grid (tablet landscape)
+   ≤900   top bar wraps: search becomes its own full-width row
+   ≤768   tablet portrait paddings
+   ≤640   1-column grid, compact type & buttons (mobile)
+   ≤400   extra-compact top bar (small phones)          */
+
+@media (max-width: 1100px) {
+  .shot-grid { gap: 36px 24px; }
+}
+
+@media (max-width: 1000px) {
+  .shot-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .topbar-inner { flex-wrap: wrap; gap: 12px 16px; }
+  .searchbar {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+    height: 44px;
+    margin: 0;
+  }
+  .topbar-actions { margin-left: auto; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .shot-page { padding: 20px 24px 64px; }
+  .shot-grid { gap: 32px 20px; }
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .shot-page { padding: 16px 20px 56px; }
+  .topbar-inner { padding-top: 12px; padding-bottom: 12px; }
+  .logo img { height: 26px; }
+  .btn-cta { padding: 0.75rem 1.25rem; font-size: 0.9375rem; }
+  .back-link { font-size: 14px; }
+  .chip { padding: 9px 14px; font-size: 13px; }
+  .shot-grid { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .shot-card-title { font-size: 16px; }
+  .shot-card-titlelink { margin-top: 10px; }
+  .shot-thumb { border-radius: 12px; }
+  .shot-header { margin-bottom: 28px; }
+  .shot-header-actions { width: 100%; }
+  .shot-header-actions .btn-cta { flex: 1; }
+  .avatar-md { width: 40px; height: 40px; }
+  .avatar-lg { width: 56px; height: 56px; }
+  .shot-media { gap: 20px; }
+  .shot-media img { border-radius: 12px; }
+  .shot-section { margin-bottom: 56px; }
+  .author-block { margin: 48px 0 16px; }
+  .empty-state { padding: 56px 0; }
+}
+
+@media (max-width: 400px) {
+  .container { padding: 0 16px; }
+  .shot-page { padding-left: 16px; padding-right: 16px; }
+  .topbar-inner { gap: 10px 12px; }
+  .topbar-actions { gap: 12px; }
+  .logo img { height: 24px; }
+  .btn-cta { padding: 0.625rem 1rem; font-size: 0.875rem; }
+  /* The logo already links back (main site on the grid page,
+     showcase on the shot page), so drop the text link. */
+  .back-link { display: none; }
+}
+
+/* ---------- Site nav (V2 — mirrors vertexexperience.com) ----------
+   Desktop: logo left, links centered, CTA right (site grid 1fr/2.25fr/1fr).
+   Mobile (≤900px): burger toggles a white dropdown panel that expands
+   with the site's 0fr→1fr spring, links enlarged. */
+
+.topbar-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.logo img { width: 9.375rem; height: auto; }
+
+.nav-menu-clip { overflow: visible; }
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.75rem 1.375rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover { color: var(--brand-accent); }
+
+.nav-link.is-current { color: var(--brand-accent); font-weight: 600; }
+
+.topbar-actions { justify-self: end; }
+
+/* Site's secondary button variant (the nav CTA) */
+.btn-cta.is-secondary { background-color: var(--gray-300); }
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--brand-primary);
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.nav-toggle svg { width: 26px; height: 26px; }
+.nav-toggle .icon-close { display: none; }
+.topbar.nav-open .nav-toggle .icon-open { display: none; }
+.topbar.nav-open .nav-toggle .icon-close { display: block; }
+
+@media (max-width: 900px) {
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+  .logo img { width: 7rem; }
+  .nav-toggle { display: inline-flex; }
+  .nav-menu-wrap {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.6s cubic-bezier(0.47, 0, 0.23, 1.38);
+  }
+  .nav-menu-clip { overflow: hidden; min-height: 0; }
+  .topbar.nav-open .nav-menu-wrap { grid-template-rows: 1fr; }
+  .nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    background: #fff;
+    border-radius: 0 0 1.25rem 1.25rem;
+    padding: 8px 24px 28px;
+    box-shadow: 0 20px 24px -4px #0a0d1214, 0 8px 8px -4px #0a0d1208;
+  }
+  .nav-menu li { width: 100%; }
+  .nav-link { width: 100%; padding: 0.75rem 0; font-size: 1.25rem; }
+}
+
+@media (max-width: 400px) {
+  .logo img { width: 6rem; }
+  .btn-cta.is-secondary { padding: 0.625rem 0.875rem; font-size: 0.8125rem; }
+}

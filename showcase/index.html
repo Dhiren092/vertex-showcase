@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Showcase | Vertex Experience</title>
+  <script>/* Relative asset paths need a trailing slash on the folder URL. */
+    if (!/(\/|\.html)$/.test(location.pathname)) location.replace(location.pathname + "/" + location.search);
+  </script>
+  <meta name="description" content="Explore the Vertex Experience portfolio — UI/UX, web design, mobile apps and branding projects.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/showcase.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="https://www.vertexexperience.com/" aria-label="Vertex Experience">
+        <img src="images/logo.svg" alt="Vertex Experience">
+      </a>
+      <div class="searchbar" id="searchbar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search-input" type="search" placeholder="Search our work..." autocomplete="off">
+      </div>
+      <div class="topbar-actions">
+        <a class="back-link" href="https://www.vertexexperience.com/">Main site</a>
+        <a class="btn-cta" href="https://www.vertexexperience.com/#contact"><span>Get in touch</span></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="container filters" id="filters" aria-label="Filter projects">
+    <button class="chip is-active" data-filter="Web design">Web design</button>
+    <button class="chip" data-filter="Mobile application">Mobile application</button>
+    <button class="chip" data-filter="Branding">Branding</button>
+    <button class="chip" data-filter="Others">Others</button>
+  </nav>
+
+  <main class="container">
+    <div class="shot-grid" id="grid"></div>
+  </main>
+
+  <script src="js/projects.js"></script>
+  <script src="js/grid.js"></script>
+</body>
+</html>
