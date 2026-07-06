@@ -15,34 +15,59 @@
 </head>
 <body>
 
-  <header class="topbar">
+  <header class="topbar" id="topbar">
     <div class="container topbar-inner">
-      <a class="logo" href="https://www.vertexexperience.com/" aria-label="Vertex Experience">
+      <a class="logo" href="https://www.vertexexperience.com/" aria-label="Vertex Experience Homepage">
         <img src="images/logo.svg" alt="Vertex Experience">
       </a>
-      <div class="searchbar" id="searchbar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="search-input" type="search" placeholder="Search our work..." autocomplete="off">
-      </div>
+      <nav class="nav-menu-wrap" aria-label="Main navigation">
+        <div class="nav-menu-clip">
+          <ul class="nav-menu" role="list">
+            <li><a class="nav-link" href="https://www.vertexexperience.com/#case-studies">Case Studies</a></li>
+            <li><a class="nav-link" href="https://www.vertexexperience.com/#about">About Us</a></li>
+            <li><a class="nav-link" href="https://www.vertexexperience.com/branding">Branding</a></li>
+            <li><a class="nav-link" href="https://www.vertexexperience.com/blog">Blog</a></li>
+            <li><a class="nav-link" href="https://www.vertexexperience.com/#process">How it Works</a></li>
+            <li><a class="nav-link is-current" href="./" aria-current="page">Showcase</a></li>
+          </ul>
+        </div>
+      </nav>
       <div class="topbar-actions">
-        <a class="back-link" href="https://www.vertexexperience.com/">Main site</a>
-        <a class="btn-cta" href="https://www.vertexexperience.com/#contact"><span>Get in touch</span></a>
+        <a class="btn-cta is-secondary" href="https://www.vertexexperience.com/free-audit"><span>Book a free audit</span></a>
+        <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
       </div>
     </div>
   </header>
 
-  <nav class="container filters" id="filters" aria-label="Filter projects">
-    <button class="chip is-active" data-filter="Web design">Web design</button>
-    <button class="chip" data-filter="Mobile application">Mobile application</button>
-    <button class="chip" data-filter="Branding">Branding</button>
-    <button class="chip" data-filter="Others">Others</button>
+  <nav class="container filters" id="filters" aria-label="Choose a category">
+    <button class="chip is-active" data-filter="UI/UX design">UI/UX design</button>
+    <button class="chip" data-filter="Branding design">Branding design</button>
   </nav>
 
   <main class="container">
-    <div class="shot-grid" id="grid"></div>
+    <section class="cover" id="cover">
+      <button class="cover-stage" id="cover-stage" aria-label="Browse projects">
+        <img id="cover-img" alt="">
+        <span class="cover-hint"><span>Browse projects</span></span>
+      </button>
+      <p class="cover-caption" id="cover-caption"></p>
+    </section>
+    <section class="shot-grid brand-grid" id="brand-grid" hidden></section>
   </main>
 
-  <script src="js/projects.js"></script>
   <script src="js/grid.js"></script>
+  <script>
+    (function () {
+      const topbar = document.getElementById("topbar");
+      const toggle = topbar.querySelector(".nav-toggle");
+      toggle.addEventListener("click", function () {
+        const open = topbar.classList.toggle("nav-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    })();
+  </script>
 </body>
 </html>
